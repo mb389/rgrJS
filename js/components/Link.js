@@ -1,16 +1,22 @@
-import React, {Component} from 'react'
-import Relay from 'react-relay'
-import moment from 'moment'
+import React from "react";
+import Relay from "react-relay";
+import moment from "moment";
 
-class Link extends Component {
+class Link extends React.Component {
   dateStyle = () => ({
     color: '#888',
     fontSize: '0.7em',
     marginRight: '0.5em'
   })
-  dateLabel = () => moment(this.props.link.createdAt).format('L')
+  dateLabel = () => {
+    let {link, relay} = this.props;
+    if (relay.hasOptimisticUpdate(link)) {
+      return 'Saving...';
+    }
+    return moment(link.createdAt).format('L')
+  }
   render() {
-    let {link} = this.props
+    let {link} = this.props;
     return (
       <li>
         <span style={this.dateStyle()}>
@@ -18,7 +24,7 @@ class Link extends Component {
         </span>
         <a href={link.url}>{link.title}</a>
       </li>
-    )
+    );
   }
 }
 
@@ -26,12 +32,12 @@ Link = Relay.createContainer(Link, {
   fragments: {
     link: () => Relay.QL`
       fragment on Link {
-          title,
-          url,
-          createdAt
+        url,
+        title,
+        createdAt,
       }
     `
   }
-})
+});
 
-export default Link
+export default Link;

@@ -1,7 +1,8 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Main from './components/Main'
-import Relay from 'react-relay'
+import React from "react";
+import ReactDOM from "react-dom";
+import Relay from "react-relay";
+
+import Main from "./components/Main";
 
 class HomeRoute extends Relay.Route {
   static routeName = 'Home';
